@@ -1,4 +1,5 @@
 const express = require("express");
+    morgan = require("morgan");
 const app = express();
 
     let topTenMovies =[
@@ -43,6 +44,8 @@ const app = express();
             director: "Stanley Kubrick"
         },
     ];
+// invoke your middleware function
+app.use (morgan("common"));
 
 // get requests
     app.get("/",(req,res)=>{
@@ -53,8 +56,18 @@ const app = express();
         res.json(topTenMovies);
     });
 
+    app.get("/documentation",(req,res)=>{
+        res.sendFile("public/documentation.html",{root:__dirname});
+    });
+
 // express.static
     app.use(express.static("public"));
+
+// Error Handling
+    app.use((err,req,res,next)=>{
+        console.error(err.stack);
+        response.status(500).send("Error 404");
+    });
 
 // listen for requests
     app.listen(8080,()=>{
