@@ -10,10 +10,12 @@ app.use(bodyParser.json());
     let users =[
         {
             id: 1,
-            name: "Wai"
+            name: "Wai",
+            favouriteMovies: "Full Metal Jacket"
         },{
             id: 2,
-            name: "Charlie"
+            name: "Charlie",
+            favouriteMovies: "Top Gun"
         }
     ]
 
@@ -66,40 +68,61 @@ app.use(bodyParser.json());
         },{
             title: "Full Metal Jacket",
             release_year: "1987",
-            story_line: "A two-segment look at the effect of the military mindset and war itself on Vietnam era Marines. The first half follows a group of recruits in boot camp under the command of the punishing Gunnery Sergeant Hartman. The second half shows one of those recruits, Joker, covering the war as a correspondent for Stars and Stripes, focusing on the Tet offensive.".
+            story_line: "A two-segment look at the effect of the military mindset and war itself on Vietnam era Marines. The first half follows a group of recruits in boot camp under the command of the punishing Gunnery Sergeant Hartman. The second half shows one of those recruits, Joker, covering the war as a correspondent for Stars and Stripes, focusing on the Tet offensive.",
             director: "Stanley Kubrick"
         },
     ];
 // invoke your middleware function
 app.use (morgan("common"));
 
-// get requests
-    app.get("/",(req,res)=>{
-        res.send("Welcome to My Top 10 Movies");
-    });
-    
-    app.get("/theBestMovies",(req,res)=>{
-        res.json(theBestMovies);
-    });
 
-    app.get("/documentation",(req,res)=>{
-        res.sendFile("public/documentation.html",{root:__dirname});
-    });
+// request for retrieving data about a user by their name employs a request parameter
+    app.get("/user/:name",(req, res)=>{
+        res.json(user.find ((user)=>
+            {return user.name === req.params.name}));
+    })
 
-// post requests
 // Adds data for a new user to our list of user.
-    app.post("bestMovies", (req, res)=>{
-        let newUser = req.body;
-
-        if (!newUser.name){
-            const message = "Missing "name" in request body";
+    app.post("/users", (req, res)=>{
+        let newUsers = req.body;
+        
+        if (!newUsers.name){
+            const message = 'Missing "name" in request body';
             res.status (400).send (message);
         }else{
-            newUser.id = uuid.version();
-            users.push(newUser);
+            newUser.id = uuid.v4();
+            users.push(newUsers);
             res.status(201).send(newUser);
         }
     });
+
+    let user = user.find((user)=>
+        {
+            return user.name === req.params.name
+        });
+
+    if (user){
+        user.favouriteMovies.push;
+        res.status(201).send("Id has successfully added");
+    } else {
+        res.status(404).send("no such users");
+    }
+
+//update
+
+
+//movie
+app.get("/",(req,res)=>{
+    res.send("Welcome to My Top 10 Movies");
+});
+
+app.get("/theBestMovies",(req,res)=>{
+    res.json(theBestMovies);
+});
+
+app.get("/documentation",(req,res)=>{
+    res.sendFile("public/documentation.html",{root:__dirname});
+});
 
 // express.static
     app.use(express.static("public"));
