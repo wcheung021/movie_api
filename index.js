@@ -100,16 +100,17 @@ app.use (morgan("common"));
         }
     });
 
-    app.put("/user/:name", (req, res)=>{
-        let user = users.find((users) => { return users.id === req.params.id });
-        
-        if (users){
-            users.favouriteMovies[req.params.favouriteMovies] = parseInt(req.params.favouriteMovies);
-            res.status(201).send ("Request Approved" );
+    app.put("/user/:id", (req, res) => {
+        const { name } = req.params;
+        const updatedUser = req.body;
+        let user = users.find((users) => users.name === name);
+        if (user) {
+          user.name = updatedUser.name;
+          res.status(200).json(user);
         } else {
-            res.status(404).send("Request denied");
+          res.status(400).send("No such user");
         }
-    });
+      });
 
     app.delete('/user/:id', (req, res) => {
         let user = users.find((users) => { return users.id === req.params.id });
