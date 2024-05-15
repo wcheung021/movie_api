@@ -77,38 +77,43 @@ app.use (morgan("common"));
 
 
 // request for retrieving data about a user by their name employs a request parameter
+    app.get("/user", (req, res) =>{
+        res.json(users)
+    })    
+
     app.get("/user/:name",(req, res)=>{
-        res.json(user.find ((user)=>
-            {return user.name === req.params.name}));
-    })
+        const user = users.find(user => user.name === req.params.name);
+        if (user) {
+            res.json(users);
+        } else {
+            res.status(404).send("No such user");
+        }
+    });
 
 // Adds data for a new user to our list of user.
     app.post("/users", (req, res)=>{
-        let newUsers = req.body;
+        const newUser = req.body;
         
-        if (!newUsers.name){
+        if (!newUser.name){
             const message = 'Missing "name" in request body';
             res.status (400).send (message);
         }else{
-            newUser.id = uuid.v4();
-            users.push(newUsers);
+            newUsers.id = uuid.v4();
+            users.push(newUser);
             res.status(201).send(newUser);
         }
     });
 
-    let user = user.find((user)=>
-        {
-            return user.name === req.params.name
-        });
+    app.post("/user/:name/favouriteMovie", (req, res) => {
+        const user = users.find(user => user.name === req.params.name);
+        if (user) {
+            user.favouriteMovies.push(req.body.title);
+            res.status(201).send("Movie successfully added to favourites");
+        } else {
+            res.status(404).send("No such user");
+        }
+    });
 
-    if (user){
-        user.favouriteMovies.push;
-        res.status(201).send("Id has successfully added");
-    } else {
-        res.status(404).send("no such users");
-    }
-
-//update
 
 
 //movie
