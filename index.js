@@ -81,39 +81,44 @@ app.use (morgan("common"));
         res.json(users)
     })    
 
-    app.get("/user/:name",(req, res)=>{
-        const user = users.find(user => user.name === req.params.name);
-        if (user) {
-            res.json(users);
-        } else {
-            res.status(404).send("No such user");
-        }
-    });
+    app.get('/user/:name', (req, res) => {
+        res.json(users.find((users) =>
+          { return users.name === req.params.name }));
+      });
 
 // Adds data for a new user to our list of user.
-    app.post("/users", (req, res)=>{
-        const newUser = req.body;
+    app.post("/user", (req, res)=>{
+        const newUsers = req.body;
         
-        if (!newUser.name){
+        if (!newUsers.name){
             const message = 'Missing "name" in request body';
             res.status (400).send (message);
         }else{
             newUsers.id = uuid.v4();
-            users.push(newUser);
-            res.status(201).send(newUser);
+            users.push(newUsers);
+            res.status(201).send(newUsers);
         }
     });
 
-    app.post("/user/:name/favouriteMovie", (req, res) => {
-        const user = users.find(user => user.name === req.params.name);
-        if (user) {
-            user.favouriteMovies.push(req.body.title);
-            res.status(201).send("Movie successfully added to favourites");
+    app.put("/user/:name", (req, res)=>{
+        let user = users.find((users) => { return users.id === req.params.id });
+        
+        if (users){
+            users.favouriteMovies[req.params.favouriteMovies] = parseInt(req.params.favouriteMovies);
+            res.status(201).send ("Request Approved" );
         } else {
-            res.status(404).send("No such user");
+            res.status(404).send("Request denied");
         }
     });
 
+    app.delete('/user/:id', (req, res) => {
+        let user = users.find((users) => { return users.id === req.params.id });
+      
+        if (users) {
+          users = users.filter((obj) => { return obj.id !== req.params.id });
+          res.status(201).send('User ' + req.params.id + ' was deleted.');
+        }
+      });
 
 
 //movie
