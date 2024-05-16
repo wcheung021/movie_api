@@ -101,7 +101,7 @@ app.use (morgan("common"));
     });
 
     app.put("/user/:id", (req, res) => {
-        const { name } = req.params;
+        const name = req.params.id;
         const updatedUser = req.body;
         let user = users.find((users) => users.name === name);
         if (user) {
