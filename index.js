@@ -104,10 +104,13 @@ app.use (morgan("common"));
         const name = req.params.id;
         const updatedUser = req.body;
         let user = users.find((users) => users.name === name);
-        if (user) {
-          user.name = updatedUser.name;
+        if(user){
+            user = {
+                name: updatedUser.name,
+                favouriteMovies: updatedUser.favouriteMovies
+          };
           res.status(200).json(user);
-        } else {
+      } else {
           res.status(400).send("No such user");
         }
       });
@@ -117,7 +120,7 @@ app.use (morgan("common"));
       
         if (users) {
           users = users.filter((obj) => { return obj.id !== req.params.id });
-          res.status(201).send('User ' + req.params.id + ' was deleted.');
+          res.status(201).send('User was deleted.');
         }
       });
 

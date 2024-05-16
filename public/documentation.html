@@ -4,17 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=(), initial-scale=1.0">
     <title>Documentation for movie API</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Top 10 Favourite Movie</h1>
-        <table class="movie-table">
+    <div class=" header">
+    <h1>User Guide</h1>
+    <p>This user guide is for testing only. It there are any questions regarding on the instructions, please feel free to contact admin for more specific directions</p>
+    </div>    
+    
+    <div class= "instructions"></div>
+    <table class="movie-table">
             <thead>
-                <th>Movie Name</th>
-                <th>Director</th>
-                <th>Year</th>
-                <th>IMDb Rating</th>
+                <th>Description of the endpint returns</th>
+                <th>The endpoint URL</th>
+                <th>The method type</th>
+                <th>The format of the request</th>
+                <th>The format of the response</th>
             </thead>
-        </table>
+            <tbody>
+                <tr>
+                    <td>User List</td>
+                    <td>/user</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for all users</td>
+                </tr>
+                <tr>
+                    <td>Specific User</td>
+                    <td>/user/:name</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for all users</td>
+                </tr>
+                <tr>
+                    <td>Create a new user</td>
+                    <td>/user</td>
+                    <td>Post</td>
+                    <td>A JSon object holding data for all users (example):
+                        <code>
+                            {
+                              name: "Michael",
+                              favouriteMovies: "Black Hawk Down"  
+                            }
+                        </code>
+                    </td>
+                    <td>A JSon object holding data for all users (example):
+                        <code>
+                            {
+                                "name": "Michael",
+                                "favouriteMovies": "Black Hawk Down",
+                                "id": "daa6851c-2a77-4a97-b93c-08df4cc8e017"
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Update User details</td>
+                    <td>/user/:id</td>
+                    <td>Put</td>
+                    <td>A JSon object holding data for all users (example):
+                        <code>
+                            {
+                                "name": "Yin",
+                                "favouriteMovies": "Black Hwak Down"  
+                            }
+                        </code>
+                    </td>
+                    <td>A JSon object holding data for all users (example):
+                        <code>
+                            {
+                                "id": 2,
+                                "name": "Yin",
+                                "favouriteMovies": "Top Gun"
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Delete User details</td>
+                    <td>/user/:id</td>
+                    <td>Delete</td>
+                    <td>A JSon object holding data for all users with specific uuid (example):
+                        <code>
+                            {
+                                "name": "Yin",
+                                "favouriteMovies": "Black Hwak Down"  
+                            }
+                        </code>
+                    </td>
+                    <td>User was deleted</td>
+                </tr>
+                <tr>
+                    <td>Welcome page</td>
+                    <td>/</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A html page holding the welcome page of this app</td>
+                </tr>
+                <tr>
+                    <td>List of the movies</td>
+                    <td>/theBestMovies</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for all movies</td>
+                </tr>
+            </tbody>
+    </table>
 </body>
 </html>
