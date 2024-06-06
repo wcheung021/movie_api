@@ -13,7 +13,7 @@ const Users = Models.User;
 app.use(bodyParser.json());
 app.use(morgan("common"));
 
-mongoose.connect('mongodb://localhost:27017/123', { useUnifiedTopology: true });
+mongoose.connect('mongodb://127.0.0.1:27017/123', { useUnifiedTopology: true });
 
 mongoose.connection.on('connected', () => {
   console.log('Connected to MongoDB');
