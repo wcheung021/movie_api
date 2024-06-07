@@ -171,21 +171,27 @@ app.get("/movies/:Title", async (req, res) => {
 //genre
 //get
 app.get("/movies/genre/:Name", async (req, res) => {
-  await Movies.findOne({ "Genre.Name": req.params.Name })
-  .then((movies) => {
+  try {
+    const genreName = new RegExp('^' + req.params.Name + '$', 'i'); // Case-insensitive regular expression
+    console.log('Query parameter:', req.params.Name); // Log the query parameter
+    const movies = await Movies.find({ "Genre.Name": genreName });
+    console.log('Query result:', movies); // Log the query result
+    if (movies.length === 0) {
+      return res.status(404).send('No movies found for the genre: ' + req.params.Name);
+    }
     res.json(movies);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error: " + err);
-  });
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).send('Error: ' + err);
+  }
 });
+
 
 
 //directors
 //get
 app.get("/movies/director/:Name", async (req, res) => {
-  await Movies.findOne({ "Director.Name": req.params.Name })
+  await Movies.find({ "Director.Name": req.params.Name })
   .then((movies) => {
     res.json(movies);
   })

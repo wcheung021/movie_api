@@ -25,89 +25,98 @@
             <tbody>
                 <tr>
                     <td>User List</td>
-                    <td>/user</td>
+                    <td>/users</td>
                     <td>Get</td>
                     <td>None</td>
                     <td>A JSon object holding data for all users</td>
                 </tr>
                 <tr>
                     <td>Specific User</td>
-                    <td>/user/:name</td>
+                    <td>/users/:Username</td>
                     <td>Get</td>
                     <td>None</td>
                     <td>A JSon object holding data for all users</td>
                 </tr>
                 <tr>
                     <td>Create a new user</td>
-                    <td>/user</td>
+                    <td>/users</td>
                     <td>Post</td>
                     <td>A JSon object holding data for all users (example):
                         <code>
                             {
-                              name: "Michael",
-                              favouriteMovies: "Black Hawk Down"  
+                            "Username": "testuser",
+                            "Password": "testuser"
+                            "Email": "testuser@testuser.com"
+                            "Birthday": 12/12/1212 
                             }
                         </code>
                     </td>
-                    <td>A JSon object holding data for all users (example):
-                        <code>
-                            {
-                                "name": "Michael",
-                                "favouriteMovies": "Black Hawk Down",
-                                "id": "daa6851c-2a77-4a97-b93c-08df4cc8e017"
-                            }
-                        </code>
-                    </td>
+                    <td>A JSon object holding data for all users</td>
                 </tr>
                 <tr>
                     <td>Update User details</td>
-                    <td>/user/:id</td>
+                    <td>/users/:Username</td>
                     <td>Put</td>
                     <td>A JSon object holding data for all users (example):
                         <code>
                             {
-                                "name": "Yin",
-                                "favouriteMovies": "Black Hwak Down"  
+                                "Username": "testuser",
+                                "Password": "testuser"
+                                "Email": "testuser@testuser.com"
+                                "Birthday": 12/12/1212 
                             }
                         </code>
                     </td>
-                    <td>A JSon object holding data for all users (example):
-                        <code>
-                            {
-                                "id": 2,
-                                "name": "Yin",
-                                "favouriteMovies": "Top Gun"
-                            }
-                        </code>
-                    </td>
+                    <td>A JSon object holding data for all users</td>
+                </tr>
+                <tr>
+                    <td>Update users movies</td>
+                    <td>/users/:Username/movies/:MovieID</td>
+                    <td>Post</td>
+                    <td>None</td>
+                    <td>Allows users to add favourite movies</td>
                 </tr>
                 <tr>
                     <td>Delete User details</td>
-                    <td>/user/:id</td>
+                    <td>/users/:Username</td>
                     <td>Delete</td>
-                    <td>A JSon object holding data for all users with specific uuid (example):
-                        <code>
-                            {
-                                "name": "Yin",
-                                "favouriteMovies": "Black Hwak Down"  
-                            }
-                        </code>
-                    </td>
-                    <td>User was deleted</td>
+                    <td>None</td>
+                    <td>Users was deleted</td>
                 </tr>
                 <tr>
-                    <td>Welcome page</td>
-                    <td>/</td>
-                    <td>Get</td>
+                    <td>Delete users movies</td>
+                    <td>/users/:Username/movies/:MovieID</td>
+                    <td>Delete</td>
                     <td>None</td>
-                    <td>A html page holding the welcome page of this app</td>
+                    <td>Users movies delete</td>
                 </tr>
                 <tr>
                     <td>List of the movies</td>
-                    <td>/theBestMovies</td>
+                    <td>/movies</td>
                     <td>Get</td>
                     <td>None</td>
                     <td>A JSon object holding data for all movies</td>
+                </tr>
+                <tr>
+                    <td>Specific movies</td>
+                    <td>/movies</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for specific movies</td>
+                </tr>
+                <tr>
+                    <td>Movies by Genre</td>
+                    <td>/movies/genre/:Name</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for specific genre</td>
+                </tr>
+                <tr>
+                    <td>Movies by Directors</td>
+                    <td>/movies/director/:Name</td>
+                    <td>Get</td>
+                    <td>None</td>
+                    <td>A JSon object holding data for specific movie director</td>
                 </tr>
             </tbody>
     </table>
