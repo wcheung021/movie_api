@@ -9,6 +9,7 @@ const app = express();
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const { title } = require('process');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -76,6 +77,7 @@ app.post('/users', async (req, res) => {
 });
 
 //update
+//update users
 app.put('/users/:Username', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -93,7 +95,54 @@ app.put('/users/:Username', async (req, res) => {
     console.error(err);
     res.status(500).send("Error: " + err);
   })
+});
 
+//update users movies
+app.post('/users/:Username/movies/:MovieID', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+     $push: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }) // This line makes sure that the updated document is returned
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
+//delete
+//delete users
+app.delete('/users/:Username', async (req, res) => {
+  await Users.findOneAndDelete({ Username: req.params.Username })
+      .then((user) => {
+          if (!user) {
+              res.status(404).send(req.params.Username + ' was not found');
+          } else {
+              res.status(200).send(req.params.Username + ' was deleted.');
+          }
+      })
+      .catch((err) => {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+      });
+});
+
+
+//delete users movies
+app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+     $pull: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }) 
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 //movies
@@ -108,6 +157,43 @@ app.get('/movies', async (req, res) => {
   });
 });
 
+app.get("/movies/:Title", async (req, res) => {
+  await Movies.findOne({ Title: req.params.Title })
+  .then((Title) => {
+    res.json(Title);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  })
+})
+
+//genre
+//get
+app.get("/movies/genre/:Name", async (req, res) => {
+  await Movies.findOne({ "Genre.Name": req.params.Name })
+  .then((movies) => {
+    res.json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
+
+//directors
+//get
+app.get("/movies/director/:Name", async (req, res) => {
+  await Movies.findOne({ "Director.Name": req.params.Name })
+  .then((movies) => {
+    res.json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
 
 app.use(express.static("public"));
 
