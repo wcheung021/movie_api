@@ -15,6 +15,11 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 app.use(bodyParser.json());
+
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 app.use(morgan("common"));
 
 mongoose.connect('mongodb://127.0.0.1:27017/123', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -77,8 +82,8 @@ app.post('/users', async (req, res) => {
 });
 
 //update
-//update users
-app.put('/users/:Username', async (req, res) => {
+//update users protected
+app.put('/users/:Username', passport.authenticate("jwt", {session: false}), async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
@@ -146,7 +151,8 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
 });
 
 //movies
-app.get('/movies', async (req, res) => {
+// protected
+app.get('/movies', passport.authenticate("jwt",{session: false}), async (req, res) => {
   await Movies.find()
       .then((movies) => {
           res.status(201).json(movies);
