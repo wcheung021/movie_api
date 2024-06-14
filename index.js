@@ -5,51 +5,45 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid');
 
-const app = express();
+    const app = express();
 
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-const { title } = require('process');
+    const mongoose = require('mongoose');
+    const Models = require('./models.js');
+    const { title } = require('process');
 
-const Movies = Models.Movie;
-const Users = Models.User;
+    const Movies = Models.Movie;
+    const Users = Models.User;;
 
-app.use(bodyParser.json());
+    app.use(bodyParser.json());
+    app.use(morgan("common"));
 
-let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
-
-app.use(morgan("common"));
-
-mongoose.connect('mongodb://127.0.0.1:27017/123', { useNewUrlParser: true, useUnifiedTopology: true });
-
-mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error('Error connecting to MongoDB:', err);
-});
-
-//documents
-app.get("/documentation", (req, res) => {
-  res.sendFile("public/documentation.html", { root: __dirname });
-});
-
+    mongoose.connect('mongodb://127.0.0.1:27017/123', { useNewUrlParser: true, useUnifiedTopology: true });
+    
+    mongoose.connection.on('connected', () => {
+      console.log('Connected to MongoDB');
+    });
+    
+    mongoose.connection.on('error', (err) => {
+      console.error('Error connecting to MongoDB:', err);
+    });
+    
+    //documents
+    app.get("/documentation", (req, res) => {
+      res.sendFile("public/documentation.html", { root: __dirname });
+    });
+    
 //users
 //get
 app.get('/users', async (req, res) => {
   await Users.find()
       .then((users) => {
           res.status(201).json(users);
-  })
-      .catch((err) => {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-  });
+  })  
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
 });
-
+});
 app.get('/users/:Username', async (req, res) => {  
   await Users.findOne({ Username: req.params.Username })
       .then((users) => {
@@ -58,8 +52,8 @@ app.get('/users/:Username', async (req, res) => {
       .catch((err) => {
           console.error(err);
           res.status(500).send('Error: ' + err);
-    });
-});
+        });
+      });
 
 //post
 app.post('/users', async (req, res) => {
@@ -80,10 +74,10 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Error creating user: ' + error.message);
   }
 });
-
+ 
 //update
-//update users protected
-app.put('/users/:Username', passport.authenticate("jwt", {session: false}), async (req, res) => {
+//update users
+app.put('/users/:Username', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
@@ -151,8 +145,7 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
 });
 
 //movies
-// protected
-app.get('/movies', passport.authenticate("jwt",{session: false}), async (req, res) => {
+app.get('/movies', async (req, res) => {
   await Movies.find()
       .then((movies) => {
           res.status(201).json(movies);
@@ -177,27 +170,21 @@ app.get("/movies/:Title", async (req, res) => {
 //genre
 //get
 app.get("/movies/genre/:Name", async (req, res) => {
-  try {
-    const genreName = new RegExp('^' + req.params.Name + '$', 'i'); // Case-insensitive regular expression
-    console.log('Query parameter:', req.params.Name); // Log the query parameter
-    const movies = await Movies.find({ "Genre.Name": genreName });
-    console.log('Query result:', movies); // Log the query result
-    if (movies.length === 0) {
-      return res.status(404).send('No movies found for the genre: ' + req.params.Name);
-    }
+  await Movies.findOne({ "Genre.Name": req.params.Name })
+  .then((movies) => {
     res.json(movies);
-  } catch (err) {
-    console.error('Error:', err);
-    res.status(500).send('Error: ' + err);
-  }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
-
 
 
 //directors
 //get
 app.get("/movies/director/:Name", async (req, res) => {
-  await Movies.find({ "Director.Name": req.params.Name })
+  await Movies.findOne({ "Director.Name": req.params.Name })
   .then((movies) => {
     res.json(movies);
   })
@@ -208,12 +195,3 @@ app.get("/movies/director/:Name", async (req, res) => {
 });
 
 app.use(express.static("public"));
-
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send("Error 404");
-});
-
-app.listen(8080, () => {
-    console.log("Your App is listening on port 8080");
-});
