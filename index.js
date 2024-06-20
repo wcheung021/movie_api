@@ -14,8 +14,14 @@ const express = require('express'),
     const Movies = Models.Movie;
     const Users = Models.User;;
 
+    let auth = require('./auth')(app);
+const passport = require("passport");
+require("./passport");
+
     app.use(bodyParser.json());
     app.use(morgan("common"));
+    app.use(bodyParser.urlencoded({ extended: true }));
+
 
     mongoose.connect('mongodb://127.0.0.1:27017/123', { useNewUrlParser: true, useUnifiedTopology: true });
     
@@ -145,7 +151,7 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
 });
 
 //movies
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate("jwt", {session: false}), async (req, res) => {
   await Movies.find()
       .then((movies) => {
           res.status(201).json(movies);
@@ -195,3 +201,11 @@ app.get("/movies/director/:Name", async (req, res) => {
 });
 
 app.use(express.static("public"));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Error 404");
+});
+app.listen(8080, () => {
+  console.log("Your App is listening on port 8080");
+});
