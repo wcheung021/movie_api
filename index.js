@@ -21,6 +21,8 @@ const cors = require("cors");
     }
   }));
 
+const {check, validationResult } = require ("express-validator");
+
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const { title } = require('process');
@@ -76,7 +78,15 @@ app.get('/users/:Username', async (req, res) => {
       });
 
 //post
-app.post('/users', passport.authenticate("jwt", {session: false}), async (req, res) => {
+app.post('/users', [ check("Username", "Username is required").isLength({min: 5}),
+  check("Username", "username contains nonalphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Password", "Password is required").not().isEmpty(),
+  check("Email", "Email does not appear to be valid").isEmail()],
+  passport.authenticate("jwt", {session: false}), async (req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
   try {
     let hashedPassword = Users.hashPassword(req.body.Password);
     const existingUser = await Users.findOne({ Username: req.body.Username });
@@ -121,7 +131,15 @@ app.put('/users/:Username', passport.authenticate("jwt", {session: false}), asyn
 });
 
 //update users movies
-app.post('/users/:Username/movies/:MovieID', passport.authenticate("jwt", {session: false}), async (req, res) => {
+app.post('/users/:Username/movies/:MovieID', [ check("Username", "Username is required").isLength({min: 5}),
+  check("Username", "username contains nonalphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Password", "Password is required").not().isEmpty(),
+  check("Email", "Email does not appear to be valid").isEmail()],
+  passport.authenticate("jwt", {session: false}), async (req, res) => {
+  let errors = calidationResult(req); 
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array()});
+  }
   let hashedPassword = Users.hashPassword(req.body.Password);
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
      $push: { FavoriteMovies: req.params.MovieID }
