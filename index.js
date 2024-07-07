@@ -39,7 +39,7 @@ const passport = require("passport");
   app.use(bodyParser.urlencoded({ extended: true }));
 
 
-    mongoose.connect('mongodb://127.0.0.1:27017/123', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
     
     mongoose.connection.on('connected', () => {
       console.log('Connected to MongoDB');
