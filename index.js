@@ -8,7 +8,7 @@ const express = require('express'),
 const app = express();
 
 const cors = require("cors");
-  let allowOrigins= ["http://localhost:8080", "http://testsite,com"];
+  let allowedOrigins= ["http://localhost:8080", "http://testsite.com"];
 
   app.use(cors({
     origin: (origin, callback) => {
@@ -39,7 +39,7 @@ const passport = require("passport");
   app.use(bodyParser.urlencoded({ extended: true }));
 
 
-    mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
     
     mongoose.connection.on('connected', () => {
       console.log('Connected to MongoDB');
@@ -136,7 +136,7 @@ app.post('/users/:Username/movies/:MovieID', [ check("Username", "Username is re
   check("Password", "Password is required").not().isEmpty(),
   check("Email", "Email does not appear to be valid").isEmail()],
   passport.authenticate("jwt", {session: false}), async (req, res) => {
-  let errors = calidationResult(req); 
+  let errors = validationResult(req); 
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array()});
   }
