@@ -44,6 +44,11 @@ app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
+// Open page
+app.get("/", async (req, res) =>{
+  res.send("Welcome to MyFlixDB");
+});
+
 // Users endpoints
 app.get('/users', passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
