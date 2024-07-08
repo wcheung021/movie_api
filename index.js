@@ -102,7 +102,12 @@ app.post('/users', [
   }
 });
 
-app.put('/users/:Username', passport.authenticate("jwt", { session: false }), async (req, res) => {
+app.put('/users/:Username', passport.authenticate("jwt", { session: false }), [
+  check("Username", "Username is required").isLength({ min: 5 }),
+  check("Username", "Username contains nonalphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Password", "Password is required").not().isEmpty(),
+  check("Email", "Email does not appear to be valid").isEmail()
+],async (req, res) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
