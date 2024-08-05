@@ -1,18 +1,5 @@
-{"_id":{"$oid":"66621fd93df3f3774ecdcdf6"},"Username":"johndoe","Password":"password123","Email":"some@some","Birthday":{"$date":"1996-12-12T00:00:00Z"},"FavoriteMovies":""}
-{"_id":{"$oid":"66622f4d2a39498b0bcdcdf6"},"Username":"janesmith","Password":"securepass456","Email":"janesmith@example.com","Birthday":"1985-07-22","FavoriteMovies":""}
-{"_id":{"$oid":"66622ffe2a39498b0bcdcdf7"},"Username":"michaelbrown","Password":"mypassword789","Email":"michaelbrown@example.com","Birthday":"1978-11-05","FavoriteMovies":""}
-{"_id":{"$oid":"666230222a39498b0bcdcdf8"},"Username":"emilywhite","Password":"whiteemily321","Email":"emilywhite@example.com","Birthday":"1995-03-30","FavoriteMovies":""}
-{"_id":{"$oid":"6662317aa42e3f2a58f4465a"},"Username":"testuser123","Password":"testuser123","Email":"testuser123@gmail.com","Birthday":{"$date":{"$numberLong":"-1800468000000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"66623cc1a42e3f2a58f44668"},"Username":"testuser23","Password":"testuser123","Email":"test123@gmail.com","Birthday":{"$date":{"$numberLong":"-1800468000000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663ceae12e8233a5959270a"},"Username":"testing098","Password":"testing098","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663cf9d12e8233a5959270e"},"Username":"testing123","Password":"testing123","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d04b12e8233a59592719"},"Username":"testing1","Password":"testing1","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d11c12e8233a5959271c"},"Username":"testing2","Password":"testing2","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d18512e8233a59592720"},"Username":"testing3","Password":"testing3","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d27f12e8233a5959272e"},"Username":"testing4","Password":"testing4","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d583640e2670a1659171"},"Username":"testing5","Password":"testing5","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6663d68d640e2670a1659175"},"Username":"testing6","Password":"testing6","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6665e48c152fdde2c1842e24"},"Username":"testing7","Password":"testing7","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6666343299d7820775a100cb"},"Username":"testing8","Password":"testing8","Email":"testing@gmail.com","Birthday":{"$date":{"$numberLong":"-21755239764000"}},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"66739e42839299c249d06c58"},"Username":"some","Password":"$2b$10$2jEkM6kaxOZn1VkKQSWyAuAj5NXCJXN8ZKSDQDI6d0T5lMMiiLe..","Email":"some@some","Birthday":{"$date":"1996-12-12T00:00:00Z"},"FavoriteMovies":[],"__v":0}
-{"_id":{"$oid":"6673a9fa4e4407f40c47bd97"},"Username":"johnde","Password":"$2b$10$uXe0LenuUfcLimYK9BBqMeZkbgUl9Qgvp1hegF4u0N6fOua2nJqV.","Email":"testing@testing","Birthday":{"$date":"1996-12-12T00:00:00Z"},"FavoriteMovies":[],"__v":0}
+{"_id":{"$oid":"66b06531675f155389cdcdf6"},"Name":"Alice Johnson","Password":"@Alice2024!","Birthday":"1985-02-19","Email":"alice.johnson@example.com","Featured":true}
+{"_id":{"$oid":"66b0657b675f155389cdcdf7"},"Name":"Bob Smith","Password":"B0bSecureP@ss","Birthday":"1990-05-15","Email":"bob.smith@example.com","Featured":true}
+{"_id":{"$oid":"66b065c0675f155389cdcdf8"},"Name":"Carol Davis","Password":"Carol#123","Birthday":"1982-11-23","Email":"carol.davis@example.com","Featured":true}
+{"_id":{"$oid":"66b0661f675f155389cdcdf9"},"Name":"David Martinez","Password":"David!2024Secure","Birthday":"1978-08-07","Email":"david.martinez@example.com","Featured":true}
+{"_id":{"$oid":"66b06663675f155389cdcdfa"},"Name":"Eva Brown","Password":"EvaStrongP@ss!","Birthday":"1995-03-30","Email":"eva.brown@example.com","Featured":true}
