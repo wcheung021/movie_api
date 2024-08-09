@@ -17,9 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('common'));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234', "http://127.0.0.1:1234"];
 app.use(cors({
   origin: (origin, callback) => {
+    console.log('Origin:', origin); // Log the origin for debugging
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       let message = "The CORS policy for this application doesn't allow access from origin " + origin;
@@ -28,6 +29,7 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
