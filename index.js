@@ -30,6 +30,11 @@ app.use(cors({
   }
 }));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Change * to your allowed origins in production
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
