@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('common'));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -29,7 +29,7 @@ app.use(cors({
   }
 }));
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("process.env.CONNECTION_URI", { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.on('connected', () => {
   console.log('Connected to MongoDB');
